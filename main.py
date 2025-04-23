@@ -115,7 +115,7 @@ def read(itemToRead): # This is a small function to change 11 12 13 and 14 to th
 
 def showdown(person):
     # these are what i call factor hands, essentially hands that are a part of a different hand. a flush is part of a straight flush, three is part of full house and pair is part of two pair and full house. these are activated when it finds such a hand so it can make "product hands" out of these even if they arent your best
-    river = person.hand+table.hand # usable cards for the player
+    river = person.hand+table.hand # usable cards for the player peepee
     hasFlush = False # if you have a flush, it checks if its also a straight since there can only be one flush per suit in 7 cards
     hasPair = False # if you have a pair (EXACTLY 2 cards) and a three it triggers fullHouse and if you have a pair it checks your remaining cards for another one
     hasThree = False # also used for fullHouse trigger
