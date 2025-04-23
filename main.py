@@ -4,7 +4,7 @@
 #
 # Libraries and Packages ----------------------------------------------------------------------:
 
-import os  # for clearing the screen
+import os  # clearing the screen
 import platform  # for OS compatibilty(cls() is used for windows clear screen while clear() is used for MacOS and Linux)
 import random  # for random card choice
 from printf import printb # slow print
