@@ -324,7 +324,7 @@ def showdown(person):
     "msg":msg
             }
 
-def compare(players): # this function finds a winner out of an indefinitely large list of players
+def compare(players,pot): # this function finds a winner out of an indefinitely large list of players and gives them the pot
     best_rank = -1 # this prevents a high card from tieing if it checks it first (this will be the best hand rank)
     best_hand = None # this will store the hand if kickers are needed to settle a tie
     winners = [] # in the case of a tie, the multiple winners will be stored here
@@ -346,10 +346,10 @@ def compare(players): # this function finds a winner out of an indefinitely larg
                 winners.append(person) # adds the person to the winners list. since they have the same rank and hand that doesnt need to be updated
 
     if len(winners) == 1:
-        printb(f"Player {players.index(winners[0]) + 1} wins") # this takes the index of the winning player and adds 1 to make the player number
+        printb(f"Player {players.index(winners[0]) + 1} wins and gets {pot} chips") # this takes the index of the winning player and adds 1 to make the player number
     else:
         tied_players = [f"Player {players.index(i) + 1}" for i in winners]
-        printb(f"It's a chopped pot between {', '.join(tied_players)}")
+        printb(f"It's a chopped pot between {', '.join(tied_players)}, they recieve {pot} chips each")
     return winners
 def init_players(num_players, starting_chips=100): # this function initializes however many players you want
     return [Player(starting_chips) for i in range(num_players)] # it returns however many you want as a list with a default chip amount of 100
@@ -648,17 +648,17 @@ while True:
                     draw(table)
                     printb("\nPress Enter to continue to river betting...")
                     input()
+                    printb(f"Table cards: {', '.join(card for card in table.convertToStr())}\n")
                     pot, current_bet = betting_round(players, first_to_act, pot)
                     players_to_check = []
                     for i, player in enumerate(players):
-                        printb(f"\n\nPlayer {i+1}'s hand:")
+                        printb(f"\n\nPlayer {i+1}'s hand:\n")
                         print(player)
                         player.check = showdown(player)
                         printb(player.check["msg"])
                         
                     winners = compare(players)
                     for i in winners:
-                        print(type(pot))
                         split_amount = pot/len(winners)
                         i.chips += split_amount
                     dealer_position = (dealer_pos + 1) % len(players)
