@@ -324,7 +324,7 @@ def showdown(person):
     "msg":msg
             }
 
-def compare(players,pot): # this function finds a winner out of an indefinitely large list of players and gives them the pot
+def compare(players): # this function finds a winner out of an indefinitely large list of players
     best_rank = -1 # this prevents a high card from tieing if it checks it first (this will be the best hand rank)
     best_hand = None # this will store the hand if kickers are needed to settle a tie
     winners = [] # in the case of a tie, the multiple winners will be stored here
