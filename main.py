@@ -524,7 +524,7 @@ def betting_round(players, starting_position, current_pot, current_bet=0): # thi
                 if num_active <= 1:
                     for i, p in enumerate(players):
                         if not p.folded:
-                            printb(f"Player {i+1} wins ${current_pot} by default")
+                            printb(f"\n\nPlayer {i+1} wins ${current_pot} by default")
                             p.chips += current_pot
                             return 0, 0  # New pot is 0
 
@@ -650,22 +650,25 @@ while True:
                     input()
                     printb(f"Table cards: {', '.join(card for card in table.convertToStr())}\n")
                     pot, current_bet = betting_round(players, first_to_act, pot)
-                    players_to_check = []
-                    for i, player in enumerate(players):
-                        printb(f"\n\nPlayer {i+1}'s hand:\n")
-                        print(player)
-                        player.check = showdown(player)
-                        printb(player.check["msg"])
-                        
-                    winners = compare(players)
-                    for i in winners:
-                        split_amount = pot/len(winners)
-                        i.chips += split_amount
-                    dealer_position = (dealer_pos + 1) % len(players)
-                    print("\nPlay another hand? (y/n): ")
-                    another_hand = input().lower()
-                    if another_hand != 'y':
-                        hand_running = False
+                    if active_players > 1:
+                        players_to_check = []
+                        for i, player in enumerate(players):
+                            printb(f"\n\nPlayer {i+1}'s hand:\n")
+                            print(player)
+                            player.check = showdown(player)
+                            printb(player.check["msg"])
+                            
+                        winners = compare(players)
+                        for i in winners:
+                            split_amount = pot/len(winners)
+                            i.chips += split_amount
+                        dealer_position = (dealer_pos + 1) % len(players)
+                        print("\nPlay another hand? (y/n): ")
+                        another_hand = input().lower()
+                        if another_hand != 'y':
+                            hand_running = False
+                    else:
+                        pass
     print("\nStart a new game with different players? (y/n): ")
     new_game = input().lower()
     if new_game != 'y':
