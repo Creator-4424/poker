@@ -651,6 +651,7 @@ while True:
                     printb(f"Table cards: {', '.join(card for card in table.convertToStr())}\n")
                     pot, current_bet = betting_round(players, first_to_act, pot)
                     if active_players > 1:
+                        print("breakpoint 1")
                         players_to_check = []
                         for i, player in enumerate(players):
                             printb(f"\n\nPlayer {i+1}'s hand:\n")
@@ -668,7 +669,7 @@ while True:
                         if another_hand != 'y':
                             hand_running = False
                     else:
-                        pass
+                        print("breakpoint 2")
     print("\nStart a new game with different players? (y/n): ")
     new_game = input().lower()
     if new_game != 'y':
