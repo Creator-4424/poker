@@ -11,6 +11,7 @@ from printf import printb # slow print
 from time import sleep # Cinematic pausing
 
 # Variables -----------------------------------------------------------------------:
+
 small_blind_amount = 5 # default blind amounts
 big_blind_amount = 10
 dealer_pos = 0 # this player takes the small blind
@@ -18,6 +19,7 @@ pot = 0 # the pot(might get removed)
 dev = False # this being manually set to true will override certain errors from being raised for testing reasons
 folded = []
 prev_bet = 0
+
 # Classes -------------------------------------------------------------------------:
 
 class Player:
@@ -113,9 +115,9 @@ def read(itemToRead): # This is a small function to change 11 12 13 and 14 to th
     else:
         return itemToRead
 
-def showdown(person):
+def showdown(person): # This gets the raw value of all hands to compare
     # these are what i call factor hands, essentially hands that are a part of a different hand. a flush is part of a straight flush, three is part of full house and pair is part of two pair and full house. these are activated when it finds such a hand so it can make "product hands" out of these even if they arent your best
-    river = person.hand+table.hand # usable cards for the player peepee
+    river = person.hand+table.hand # usable cards for the player
     hasFlush = False # if you have a flush, it checks if its also a straight since there can only be one flush per suit in 7 cards
     hasPair = False # if you have a pair (EXACTLY 2 cards) and a three it triggers fullHouse and if you have a pair it checks your remaining cards for another one
     hasThree = False # also used for fullHouse trigger
@@ -351,10 +353,11 @@ def compare(players): # this function finds a winner out of an indefinitely larg
         tied_players = [f"Player {players.index(i) + 1}" for i in winners]
         printb(f"It's a chopped pot between {', '.join(tied_players)}, they recieve {pot} chips each")
     return winners
+
 def init_players(num_players, starting_chips=100): # this function initializes however many players you want
     return [Player(starting_chips) for i in range(num_players)] # it returns however many you want as a list with a default chip amount of 100
 
-def init_game():
+def init_game(): # adds the requested amount of players at the start of the game
     while True:
         try:
             printb("\n\nEnter the number of players: ")
@@ -371,7 +374,7 @@ def init_game():
             clear_console()
     return init_players(num_players)
 
-def collect_blinds(players,dealer_pos):
+def collect_blinds(players,dealer_pos): # this collects the blinds every round
     player_amount = len(players)
     small_blind_pos = (dealer_pos +1) % player_amount # this gets the index of the needed player using % to have it wrap around back to player 0
     big_blind_pos = (dealer_pos+2) % player_amount
@@ -551,6 +554,7 @@ def betting_round(players, starting_position, current_pot, current_bet=0): # thi
             break
 
     return current_pot, current_bet
+
 def reset(players): # this function just sets the current bet to 0 before every new betting round
         for player in players:
             player.current_bet = 0
